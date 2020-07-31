@@ -68,6 +68,12 @@ class App extends Component {
     // }));
   };
 
+  toggle = (status) => {
+    this.setState({
+      value: !status,
+    });
+  };
+
   componentDidMount() {
     const writedContacts = localStorage.getItem("contacts");
     if (writedContacts) {
@@ -78,16 +84,10 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, PrevState) {
-    if (PrevState.contacts !== this.props.contacts) {
-      localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
+    if (prevProps.contacts !== this.props.contacts) {
+      localStorage.setItem("contacts", JSON.stringify(this.props.contacts));
     }
   }
-
-  toggle = (status) => {
-    this.setState({
-      value: !status,
-    });
-  };
 
   render() {
     const filtered = this.getFilteredContacts();
