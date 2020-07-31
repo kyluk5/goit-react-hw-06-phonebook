@@ -1,11 +1,12 @@
 import { combineReducers } from "redux";
-import { ADD } from "../constants/contactsConst";
+import { ADD, LOCAL } from "../constants/contactsConst";
 
 const items = (state = [], { type, payload }) => {
   switch (type) {
     case ADD:
       return [...state, payload];
-
+    case LOCAL:
+      return payload;
     default:
       return state;
   }

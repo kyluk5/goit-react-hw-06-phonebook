@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import { v4 as uuidv4 } from "uuid";
 import { connect } from "react-redux";
 import contactsActions from "../../redux/actions/contactsAction";
 import PfoneForm from "../PhoneForm/PhoneForm";
@@ -9,7 +8,6 @@ import "./App.css";
 
 class App extends Component {
   state = {
-    // contacts: [],
     filter: "",
     name: "",
     number: "",
@@ -53,13 +51,9 @@ class App extends Component {
       this.toggle(value);
       return;
     }
-    console.log(this.props);
+
     this.props.addNewContact(name, number);
-    // const object = {
-    //   name: name,
-    //   number: number,
-    //   id: uuidv4(),
-    // };
+
     // this.setState((prev) => ({
     //   contacts: [...prev.contacts, object],
     //   filter: "",
@@ -77,9 +71,11 @@ class App extends Component {
   componentDidMount() {
     const writedContacts = localStorage.getItem("contacts");
     if (writedContacts) {
-      this.setState({
-        contacts: JSON.parse(writedContacts),
-      });
+      // this.setState({
+      //   contacts: JSON.parse(writedContacts),
+      // });
+      this.props.readFromLocalStorage(JSON.parse(writedContacts));
+      console.log(JSON.parse(writedContacts));
     }
   }
 
@@ -134,6 +130,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   addNewContact: contactsActions.addContact,
+  readFromLocalStorage: contactsActions.readFromLocal,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
