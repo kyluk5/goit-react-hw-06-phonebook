@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
+import { connect } from "react-redux";
+import contactsActions from "../../redux/actions/contactsAction";
 import PfoneForm from "../PhoneForm/PhoneForm";
 import FindContact from "../FindContact/FindContact";
 import { CSSTransition } from "react-transition-group";
@@ -7,7 +9,7 @@ import "./App.css";
 
 class App extends Component {
   state = {
-    contacts: [],
+    // contacts: [],
     filter: "",
     name: "",
     number: "",
@@ -31,8 +33,8 @@ class App extends Component {
   };
 
   getFilteredContacts = () => {
-    const { contacts, filter } = this.state;
-    return contacts.filter((item) =>
+    const { filter } = this.state;
+    return this.props.contacts.filter((item) =>
       item.name.toLowerCase().includes(filter.toLowerCase())
     );
   };
@@ -46,22 +48,24 @@ class App extends Component {
 
   submitForm = (e) => {
     e.preventDefault();
-    const { name, number, contacts, value } = this.state;
-    if (contacts.find((item) => item.name === this.state.name)) {
+    const { name, number, value } = this.state;
+    if (this.props.contacts.find((item) => item.name === this.state.name)) {
       this.toggle(value);
       return;
     }
-    const object = {
-      name: name,
-      number: number,
-      id: uuidv4(),
-    };
-    this.setState((prev) => ({
-      contacts: [...prev.contacts, object],
-      filter: "",
-      name: "",
-      number: "",
-    }));
+    console.log(this.props);
+    this.props.addNewContact(name, number);
+    // const object = {
+    //   name: name,
+    //   number: number,
+    //   id: uuidv4(),
+    // };
+    // this.setState((prev) => ({
+    //   contacts: [...prev.contacts, object],
+    //   filter: "",
+    //   name: "",
+    //   number: "",
+    // }));
   };
 
   componentDidMount() {
@@ -74,7 +78,7 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, PrevState) {
-    if (PrevState.contacts !== this.state.contacts) {
+    if (PrevState.contacts !== this.props.contacts) {
       localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
     }
   }
@@ -124,4 +128,12 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  contacts: state.contacts.items,
+});
+
+const mapDispatchToProps = {
+  addNewContact: contactsActions.addContact,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

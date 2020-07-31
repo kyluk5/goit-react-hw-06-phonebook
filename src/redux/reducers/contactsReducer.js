@@ -1,6 +1,15 @@
 import { combineReducers } from "redux";
+import { ADD } from "../constants/contactsConst";
 
-const items = (state = [], action) => state;
+const items = (state = [], { type, payload }) => {
+  switch (type) {
+    case ADD:
+      return [...state, payload];
+
+    default:
+      return state;
+  }
+};
 
 const filter = (state = "", action) => state;
 
