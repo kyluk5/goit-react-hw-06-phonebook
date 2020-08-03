@@ -1,7 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { connect } from "react-redux";
 import "../FindContact/FindContact.css";
+import contactsAction from "../../redux/actions/contactsAction";
 
 const FindContact = ({ filtered, filterValue, deleteContact }) => {
   return (
@@ -37,7 +39,13 @@ const FindContact = ({ filtered, filterValue, deleteContact }) => {
   );
 };
 
-export default FindContact;
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = {
+  deleteContact: contactsAction.deleteContact,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FindContact);
 
 FindContact.propTypes = {
   filtered: PropTypes.array.isRequired,

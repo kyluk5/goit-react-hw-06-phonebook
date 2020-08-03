@@ -1,5 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
-import { ADD, DELETE, FILTER, LOCAL } from "../constants/contactsConst";
+import { LOCAL, ADD, DELETE, FILTER } from "../constants/contactsConst";
+
+const readFromLocal = (arr) => ({
+  type: LOCAL,
+  payload: arr,
+});
 
 const addContact = (name, number) => ({
   type: ADD,
@@ -15,6 +20,7 @@ const deleteContact = (e) => ({
   payload: e.target.id,
 });
 
+// ========================================
 const getFilteredContacts = (contacts, filter) => ({
   type: FILTER,
   payload: {
@@ -22,17 +28,11 @@ const getFilteredContacts = (contacts, filter) => ({
     filter,
   },
 });
-// ========================================
-
-const readFromLocal = (arr) => ({
-  type: LOCAL,
-  payload: arr,
-});
 
 export default {
+  readFromLocal,
   addContact,
   deleteContact,
-  getFilteredContacts,
   // =================
-  readFromLocal,
+  getFilteredContacts,
 };

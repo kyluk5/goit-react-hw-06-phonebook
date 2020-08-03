@@ -102,11 +102,7 @@ class App extends Component {
           number={number}
           contactNumber={this.contactNumber}
         />
-        <FindContact
-          filtered={filtered}
-          filterValue={this.filterValue}
-          deleteContact={this.props.deleteEachContact}
-        />
+        <FindContact filtered={filtered} filterValue={this.filterValue} />
       </>
     );
   }
