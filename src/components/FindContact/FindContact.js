@@ -5,10 +5,20 @@ import { connect } from "react-redux";
 import "../FindContact/FindContact.css";
 import contactsAction from "../../redux/actions/contactsAction";
 
-const FindContact = ({ filtered, filterValue, deleteContact }) => {
+const FindContact = ({ filter, contacts, filterValue, deleteContact }) => {
+  // const filterValue = (e) => {
+  //   filter === e.target.value;
+  // };
+
+  const getFilteredContacts = () => {
+    return contacts.filter((item) =>
+      item.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
+
   return (
     <>
-      {filtered.length > 1 && (
+      {getFilteredContacts().length > 1 && (
         <div className="search-container">
           {/* <h3>Contacts</h3> */}
           <span>Find contacts by name</span>
@@ -18,7 +28,7 @@ const FindContact = ({ filtered, filterValue, deleteContact }) => {
       )}
       <div className="search_info">
         <TransitionGroup component="ul" className="contact_list">
-          {filtered.map((item) => (
+          {getFilteredContacts().map((item) => (
             <CSSTransition key={item.id} classNames="list__item" timeout={800}>
               <li className="contact_item" key={item.id}>
                 {item.name} : {item.number}
@@ -39,16 +49,19 @@ const FindContact = ({ filtered, filterValue, deleteContact }) => {
   );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  filter: state.contacts.filter,
+  contacts: state.contacts.items,
+});
 
 const mapDispatchToProps = {
+  filterValue: contactsAction.inputValue,
   deleteContact: contactsAction.deleteContact,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FindContact);
 
 FindContact.propTypes = {
-  filtered: PropTypes.array.isRequired,
   filterValue: PropTypes.func.isRequired,
   deleteContact: PropTypes.func.isRequired,
 };

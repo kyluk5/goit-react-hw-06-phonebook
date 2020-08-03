@@ -8,7 +8,6 @@ import "./App.css";
 
 class App extends Component {
   state = {
-    filter: "",
     name: "",
     number: "",
     value: false,
@@ -26,17 +25,6 @@ class App extends Component {
     });
   };
 
-  filterValue = (e) => {
-    this.setState({ filter: e.target.value });
-  };
-
-  getFilteredContacts = () => {
-    const { filter } = this.state;
-    return this.props.contacts.filter((item) =>
-      item.name.toLowerCase().includes(filter.toLowerCase())
-    );
-  };
-
   submitForm = (e) => {
     e.preventDefault();
     const { name, number, value } = this.state;
@@ -48,7 +36,7 @@ class App extends Component {
     this.props.addNewContact(name, number);
 
     this.setState({
-      filter: "",
+      // filter: "",
       name: "",
       number: "",
     });
@@ -74,7 +62,6 @@ class App extends Component {
   }
 
   render() {
-    const filtered = this.getFilteredContacts();
     const { name, number, value } = this.state;
     const test = () => {
       this.toggle(true);
@@ -102,7 +89,7 @@ class App extends Component {
           number={number}
           contactNumber={this.contactNumber}
         />
-        <FindContact filtered={filtered} filterValue={this.filterValue} />
+        <FindContact />
       </>
     );
   }
