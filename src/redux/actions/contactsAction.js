@@ -10,11 +10,9 @@ const addContact = (name, number) => ({
   },
 });
 
-const deleteContact = (contactId) => ({
+const deleteContact = (e) => ({
   type: DELETE,
-  payload: {
-    contactId,
-  },
+  payload: e.target.id,
 });
 
 const getFilteredContacts = (contacts, filter) => ({

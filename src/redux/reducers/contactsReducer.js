@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { ADD, LOCAL } from "../constants/contactsConst";
+import { ADD, DELETE, LOCAL } from "../constants/contactsConst";
 
 const items = (state = [], { type, payload }) => {
   switch (type) {
@@ -7,6 +7,8 @@ const items = (state = [], { type, payload }) => {
       return [...state, payload];
     case LOCAL:
       return payload;
+    case DELETE:
+      return state.filter((contact) => contact.id !== payload);
     default:
       return state;
   }

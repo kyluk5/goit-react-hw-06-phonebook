@@ -37,13 +37,6 @@ class App extends Component {
     );
   };
 
-  deleteContact = (e) => {
-    const id = e.target.id;
-    this.setState((prev) => ({
-      contacts: prev.contacts.filter((contact) => contact.id !== id),
-    }));
-  };
-
   submitForm = (e) => {
     e.preventDefault();
     const { name, number, value } = this.state;
@@ -54,12 +47,11 @@ class App extends Component {
 
     this.props.addNewContact(name, number);
 
-    // this.setState((prev) => ({
-    //   contacts: [...prev.contacts, object],
-    //   filter: "",
-    //   name: "",
-    //   number: "",
-    // }));
+    this.setState({
+      filter: "",
+      name: "",
+      number: "",
+    });
   };
 
   toggle = (status) => {
@@ -71,11 +63,7 @@ class App extends Component {
   componentDidMount() {
     const writedContacts = localStorage.getItem("contacts");
     if (writedContacts) {
-      // this.setState({
-      //   contacts: JSON.parse(writedContacts),
-      // });
       this.props.readFromLocalStorage(JSON.parse(writedContacts));
-      console.log(JSON.parse(writedContacts));
     }
   }
 
@@ -117,7 +105,7 @@ class App extends Component {
         <FindContact
           filtered={filtered}
           filterValue={this.filterValue}
-          deleteContact={this.deleteContact}
+          deleteContact={this.props.deleteEachContact}
         />
       </>
     );
@@ -131,6 +119,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   addNewContact: contactsActions.addContact,
   readFromLocalStorage: contactsActions.readFromLocal,
+  deleteEachContact: contactsActions.deleteContact,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
