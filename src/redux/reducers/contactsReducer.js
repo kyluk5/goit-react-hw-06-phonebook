@@ -1,3 +1,23 @@
+import { createReducer } from "@reduxjs/toolkit";
+import {
+  readFromLocal,
+  addContact,
+  deleteContact,
+  inputValue,
+} from "../actions/contactsAction";
+
+export const items = createReducer([], {
+  [readFromLocal]: (state, { payload }) => payload,
+  [addContact]: (state, { payload }) => [...state, payload],
+  [deleteContact]: (state, { payload }) =>
+    state.filter((contact) => contact.id !== payload),
+});
+
+export const filter = createReducer("", {
+  [inputValue]: (state, { payload }) => (state = payload),
+});
+
+// =========================================
 // import { combineReducers } from "redux";
 // import { ADD, DELETE, LOCAL, VALUE } from "../constants/contactsConst";
 
@@ -27,24 +47,3 @@
 //   items,
 //   filter,
 // });
-
-// ==================================================
-
-import { createReducer } from "@reduxjs/toolkit";
-import {
-  readFromLocal,
-  addContact,
-  deleteContact,
-  inputValue,
-} from "../actions/contactsAction";
-
-export const items = createReducer([], {
-  [readFromLocal]: (state, { payload }) => payload,
-  [addContact]: (state, { payload }) => [...state, payload],
-  [deleteContact]: (state, { payload }) =>
-    state.filter((contact) => contact.id !== payload),
-});
-
-export const filter = createReducer("", {
-  [inputValue]: (state, { payload }) => (state = payload),
-});
