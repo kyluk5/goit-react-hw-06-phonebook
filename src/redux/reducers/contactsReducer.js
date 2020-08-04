@@ -1,3 +1,4 @@
+import { combineReducers } from "redux";
 import { createReducer } from "@reduxjs/toolkit";
 import {
   readFromLocal,
@@ -6,17 +7,21 @@ import {
   inputValue,
 } from "../actions/contactsAction";
 
-export const items = createReducer([], {
+const items = createReducer([], {
   [readFromLocal]: (state, { payload }) => payload,
   [addContact]: (state, { payload }) => [...state, payload],
   [deleteContact]: (state, { payload }) =>
     state.filter((contact) => contact.id !== payload),
 });
 
-export const filter = createReducer("", {
+const filter = createReducer("", {
   [inputValue]: (state, { payload }) => (state = payload),
 });
 
+export default combineReducers({
+  items,
+  filter,
+});
 // =========================================
 // import { combineReducers } from "redux";
 // import { ADD, DELETE, LOCAL, VALUE } from "../constants/contactsConst";
