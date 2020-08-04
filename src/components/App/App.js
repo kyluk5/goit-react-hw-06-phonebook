@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import contactsActions from "../../redux/actions/contactsAction";
+import { readFromLocal, addContact } from "../../redux/actions/contactsAction";
 import PfoneForm from "../PhoneForm/PhoneForm";
 import FindContact from "../FindContact/FindContact";
 import { CSSTransition } from "react-transition-group";
@@ -28,7 +28,7 @@ class App extends Component {
       return;
     }
 
-    this.props.addNewContact(name, number);
+    this.props.addContact(name, number);
 
     this.setState({
       name: "",
@@ -45,7 +45,7 @@ class App extends Component {
   componentDidMount() {
     const writedContacts = localStorage.getItem("contacts");
     if (writedContacts) {
-      this.props.readFromLocalStorage(JSON.parse(writedContacts));
+      this.props.readFromLocal(JSON.parse(writedContacts));
     }
   }
 
@@ -93,9 +93,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  addNewContact: contactsActions.addContact,
-  readFromLocalStorage: contactsActions.readFromLocal,
-  deleteEachContact: contactsActions.deleteContact,
+  addContact,
+  readFromLocal,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

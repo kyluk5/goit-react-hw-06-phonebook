@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { connect } from "react-redux";
 import "../FindContact/FindContact.css";
-import contactsAction from "../../redux/actions/contactsAction";
+import { deleteContact, inputValue } from "../../redux/actions/contactsAction";
 
-const FindContact = ({ filter, contacts, filterValue, deleteContact }) => {
+const FindContact = ({ filter, contacts, inputValue, deleteContact }) => {
   const getFilteredContacts = () => {
     return contacts.filter((item) =>
       item.name.toLowerCase().includes(filter.toLowerCase())
@@ -19,7 +19,7 @@ const FindContact = ({ filter, contacts, filterValue, deleteContact }) => {
           {/* <h3>Contacts</h3> */}
           <span>Find contacts by name</span>
           <br></br>
-          <input type="text" onChange={filterValue}></input>
+          <input type="text" onChange={inputValue}></input>
         </div>
       )}
       <div className="search_info">
@@ -31,8 +31,7 @@ const FindContact = ({ filter, contacts, filterValue, deleteContact }) => {
                 <button
                   className="delete_btn"
                   type="button"
-                  id={item.id}
-                  onClick={deleteContact}
+                  onClick={() => deleteContact(item.id)}
                 >
                   Delete
                 </button>
@@ -45,19 +44,20 @@ const FindContact = ({ filter, contacts, filterValue, deleteContact }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  filter: state.contacts.filter,
-  contacts: state.contacts.items,
-});
+const mapStateToProps = (state) => {
+  return {
+    filter: state.contacts.filter,
+    contacts: state.contacts.items,
+  };
+};
 
 const mapDispatchToProps = {
-  filterValue: contactsAction.inputValue,
-  deleteContact: contactsAction.deleteContact,
+  inputValue,
+  deleteContact,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FindContact);
 
 FindContact.propTypes = {
-  filterValue: PropTypes.func.isRequired,
   deleteContact: PropTypes.func.isRequired,
 };
