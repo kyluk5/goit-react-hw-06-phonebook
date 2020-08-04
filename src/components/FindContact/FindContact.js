@@ -6,10 +6,6 @@ import "../FindContact/FindContact.css";
 import contactsAction from "../../redux/actions/contactsAction";
 
 const FindContact = ({ filter, contacts, filterValue, deleteContact }) => {
-  // const filterValue = (e) => {
-  //   filter === e.target.value;
-  // };
-
   const getFilteredContacts = () => {
     return contacts.filter((item) =>
       item.name.toLowerCase().includes(filter.toLowerCase())

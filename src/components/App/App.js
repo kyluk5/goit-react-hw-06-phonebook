@@ -36,7 +36,6 @@ class App extends Component {
     this.props.addNewContact(name, number);
 
     this.setState({
-      // filter: "",
       name: "",
       number: "",
     });
