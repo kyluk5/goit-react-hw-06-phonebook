@@ -3,13 +3,7 @@ import PropTypes from "prop-types";
 import { CSSTransition } from "react-transition-group";
 import "./PhoneForm.css";
 
-const PhoneForm = ({
-  submitForm,
-  name,
-  contactName,
-  number,
-  contactNumber,
-}) => {
+const PhoneForm = ({ submitForm, name, contactInputValue, number }) => {
   const [result, setResult] = useState(false);
 
   useEffect(() => {
@@ -30,7 +24,7 @@ const PhoneForm = ({
           type="text"
           name="name"
           value={name}
-          onChange={contactName}
+          onChange={contactInputValue}
         ></input>
         <br></br>
         <span>Number</span>
@@ -40,7 +34,7 @@ const PhoneForm = ({
           type="text"
           name="number"
           value={number}
-          onChange={contactNumber}
+          onChange={contactInputValue}
         ></input>
         <br></br>
         <button className="submit_btn" type="submit">
@@ -56,7 +50,6 @@ export default PhoneForm;
 PhoneForm.propTypes = {
   submitForm: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
-  contactName: PropTypes.func.isRequired,
+  contactInputValue: PropTypes.func.isRequired,
   number: PropTypes.string.isRequired,
-  contactNumber: PropTypes.func.isRequired,
 };

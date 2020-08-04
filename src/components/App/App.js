@@ -13,15 +13,10 @@ class App extends Component {
     value: false,
   };
 
-  contactName = (e) => {
+  contactInputValue = ({ target }) => {
+    const { name, value } = target;
     this.setState({
-      name: e.target.value,
-    });
-  };
-
-  contactNumber = (e) => {
-    this.setState({
-      number: e.target.value,
+      [name]: value,
     });
   };
 
@@ -84,9 +79,8 @@ class App extends Component {
         <PfoneForm
           submitForm={this.submitForm}
           name={name}
-          contactName={this.contactName}
+          contactInputValue={this.contactInputValue}
           number={number}
-          contactNumber={this.contactNumber}
         />
         <FindContact />
       </>
